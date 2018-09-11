@@ -156,7 +156,7 @@ perf annotate
 ```
 
 
-## C5
+### C5
 ```shell
 # example1 compile
 gcc example.c -o example.o
@@ -170,4 +170,15 @@ sudo perf record --pid `pidof example.o`
 sudo perf record sleep 10 ./example.o
 # Repeat profiling
 sudo perf stat -r 2 sleep 5 ./example.o
+```
+
+### Use perf with vpp
+Get vpp-main proccess stats with perf:
+```shell
+perf stat -e task-clock,cycles,instructions,cache-references,cache-misses,LLC-loads,LLC-load-misses -p `pgrep vpp_main` #-t `ps -eL | grep vpp_wk_0 | cut -d" " -f 2`
+```
+
+Get vpp-main proccess stats with threads info:
+```shell
+perf stat --per-thread -e task-clock,cycles,instructions,cache-references,cache-misses,LLC-loads,LLC-load-misses -p `pgrep vpp_main` #-t `ps -eL | grep vpp_wk_0 | cut -d" " -f 2`
 ```
